@@ -119,8 +119,23 @@ string Phone_Directory::remove_entry(const string& name) // Exercise 1.7: please
 	// Hint: you can use the code below to shift names down in the directory to remove the selected entry specified by "index"
 	// for (int i = index; i < size - 1; i++)
 		// the_directory[i] = the_directory[i + 1];
+	Directory_Entry* new_directory(new Directory_Entry[capacity]); //Creates temporary array to hold new arrys
+	string number = lookup_entry(name); 
+	int index = find(name);
+	if (index != -1) {
+		the_directory[index].set_number("-1");
+		for (int i = 0; i < size; ++i) {
+			if (the_directory[i].get_number() != "-1")
+				new_directory[i] = the_directory[i];
+		}
+		the_directory = new_directory;	//Set the_directory equal to new_directory
 
-	return "";
+		string ret = name + " ;s number was: " + number;	
+		return ret;	//Return string with number that was deleted
+	}
+	delete[] new_directory;	//Deletes the temporary array
+
+	return ""; //If the index returned by 'find' is equal to '-1' returns empty string
 }
 
 // Private method implementation
